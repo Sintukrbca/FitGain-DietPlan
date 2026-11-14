@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculate BMR, TDEE, calories and get a personalized vegetarian or non-vegetarian diet plan.">
+  <title>FitGain Diet Plan | Smart Diet & Calorie Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="FitGain home"><img class="brand-logo" src="/images/fitgain-mark.png" alt=""><span>fitgain<span class="brand-accent"> dietplan</span></span></a>
+    <nav><a href="#how-it-works">How it works</a><a href="#planner">Diet planner</a><a href="#about">About</a></nav>
+    <a class="header-cta" href="#planner">Calculate now <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> YOUR PERSONAL FITNESS COMPANION</div>
+        <h1>Know your numbers.<br><em>Fuel your goals.</em></h1>
+        <p>Calculate your BMR, TDEE and daily calorie needs. Get a practical vegetarian or non-vegetarian diet plan with a monthly grocery estimate.</p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#planner">Build my diet plan <span>→</span></a>
+          <span class="micro-note">Free • Simple • Personalized</span>
+        </div>
+        <div class="hero-stats">
+          <div><strong>BMR</strong><small>Resting calories</small></div>
+          <div><strong>TDEE</strong><small>Daily burn estimate</small></div>
+          <div><strong>Macros</strong><small>Protein & carbs</small></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="orb orb-one"></div><div class="orb orb-two"></div>
+        <div class="visual-card main-visual">
+          <div class="visual-top"><span>DAILY NUTRITION</span><span class="live-dot">● LIVE PLAN</span></div>
+          <div class="visual-number">2,350 <small>kcal</small></div>
+          <div class="visual-caption">A target built around your body and activity</div>
+          <div class="macro-line"><span>Protein</span><b>95g</b><i><u style="width:78%"></u></i></div>
+          <div class="macro-line"><span>Carbs</span><b>320g</b><i><u style="width:90%"></u></i></div>
+          <div class="macro-line"><span>Fats</span><b>70g</b><i><u style="width:60%"></u></i></div>
+          <div class="visual-bottom"><span>PERSONALIZED PLAN</span><span>✦</span></div>
+        </div>
+        <div class="floating-chip chip-top">✦ Smart calorie estimate</div>
+        <div class="floating-chip chip-bottom">🥗 Veg & non-veg options</div>
+      </div>
+    </section>
+
+    <section class="trust-strip" id="how-it-works">
+      <div><span>01</span><b>Enter your details</b><small>Age, height, weight & activity</small></div>
+      <div><span>02</span><b>Choose your goal</b><small>Gain, maintain or lose weight</small></div>
+      <div><span>03</span><b>Get your plan</b><small>Calories, macros & grocery list</small></div>
+    </section>
+
+    <section class="planner-section" id="planner">
+      <div class="section-heading">
+        <div class="eyebrow">LET'S GET PERSONAL</div>
+        <h2>Your body. Your <em>game plan.</em></h2>
+        <p>Fill in the details below to generate your nutrition estimate.</p>
+      </div>
+
+      <div class="planner-grid">
+        <form class="planner-form" action="/calculate" method="POST" id="plannerForm">
+          <div class="form-head"><div><span class="step-label">YOUR PROFILE</span><h3>Basic information</h3></div><span class="form-icon">⌁</span></div>
+          <div class="field-grid">
+            <label class="field"><span>Weight <small>(kg)</small></span><input type="number" name="weight" min="25" max="300" step="0.1" placeholder="e.g. 65" value="<%= values.weight || '' %>" required></label>
+            <label class="field"><span>Height <small>(cm)</small></span><input type="number" name="height" min="120" max="230" step="0.1" placeholder="e.g. 170" value="<%= values.height || '' %>" required></label>
+            <label class="field"><span>Age <small>(years)</small></span><input type="number" name="age" min="15" max="100" placeholder="e.g. 24" value="<%= values.age || '' %>" required></label>
+            <label class="field"><span>Gender</span><select name="gender" required><option value="male" <%= values.gender === 'male' ? 'selected' : '' %>>Male</option><option value="female" <%= values.gender === 'female' ? 'selected' : '' %>>Female</option></select></label>
+          </div>
+
+          <div class="form-divider"></div>
+          <div class="form-head"><div><span class="step-label">YOUR ROUTINE</span><h3>Activity & goal</h3></div></div>
+          <label class="field full"><span>Daily activity level</span>
+            <select name="activity" required>
+              <option value="sedentary" <%= values.activity === 'sedentary' ? 'selected' : '' %>>Mostly sitting / little exercise</option>
+              <option value="light" <%= values.activity === 'light' ? 'selected' : '' %>>Light activity / exercise 1–3 days</option>
+              <option value="moderate" <%= !values.activity || values.activity === 'moderate' ? 'selected' : '' %>>Gym or exercise 4–5 days</option>
+              <option value="very" <%= values.activity === 'very' ? 'selected' : '' %>>Hard training / physically active work</option>
+            </select>
+          </label>
+          <div class="choice-label">Main goal</div>
+          <div class="choice-grid">
+            <label class="choice"><input type="radio" name="goal" value="gain" <%= !values.goal || values.goal === 'gain' ? 'checked' : '' %>><span class="choice-box"><b>↗</b><strong>Gain weight</strong><small>Build size & muscle</small></span></label>
+            <label class="choice"><input type="radio" name="goal" value="maintain" <%= values.goal === 'maintain' ? 'checked' : '' %>><span class="choice-box"><b>＝</b><strong>Maintain</strong><small>Stay around current weight</small></span></label>
+            <label class="choice"><input type="radio" name="goal" value="lose" <%= values.goal === 'lose' ? 'checked' : '' %>><span class="choice-box"><b>↘</b><strong>Lose weight</strong><small>Gradual fat loss</small></span></label>
+          </div>
+
+          <div class="form-divider"></div>
+          <div class="form-head"><div><span class="step-label">FOOD PREFERENCES</span><h3>Build your diet</h3></div></div>
+          <div class="choice-grid diet-choices">
+            <label class="choice"><input type="radio" name="diet" value="veg" <%= !values.diet || values.diet === 'veg' ? 'checked' : '' %>><span class="choice-box"><b>🥗</b><strong>Vegetarian</strong><small>Milk, dal, paneer, soya</small></span></label>
+            <label class="choice"><input type="radio" name="diet" value="nonveg" <%= values.diet === 'nonveg' ? 'checked' : '' %>><span class="choice-box"><b>🍗</b><strong>Non-vegetarian</strong><small>Eggs, chicken & more</small></span></label>
+          </div>
+          <label class="field full budget-field"><span>Monthly food budget <small>(₹)</small></span><input type="number" name="budget" min="500" max="50000" step="100" value="<%= values.budget || 4000 %>" required></label>
+          <button class="submit-btn" type="submit">Calculate my plan <span>→</span></button>
+          <p class="form-footnote">Your information is used only to calculate this plan in this session.</p>
+        </form>
+
+        <aside class="side-note">
+          <div class="side-icon">✦</div><h3>A plan that fits real life.</h3>
+          <p>No complicated rules. Get a practical starting point based on your body, routine, food preference and budget.</p>
+          <div class="side-benefit"><span>✓</span><div><b>Body metrics</b><small>BMI, BMR and TDEE estimates</small></div></div>
+          <div class="side-benefit"><span>✓</span><div><b>Nutrition targets</b><small>Daily calories, protein, carbs and fats</small></div></div>
+          <div class="side-benefit"><span>✓</span><div><b>Food planning</b><small>Meals, portions and monthly grocery list</small></div></div>
+          <div class="side-quote">“Small steps, repeated daily, create lasting progress.”</div>
+        </aside>
+      </div>
+
+      <% if (error) { %>
+        <div class="error-box" role="alert"><b>Unable to calculate:</b> <%= error %></div>
+      <% } %>
+
+      <% if (result) { %>
+      <section class="results" id="results">
+        <div class="results-heading"><div><div class="eyebrow">YOUR PERSONAL REPORT</div><h2>Your numbers are <em>ready.</em></h2><p><%= result.input.weight %> kg • <%= result.input.height %> cm • <%= result.input.age %> years • <%= result.plan.dietLabel %></p></div><button class="print-btn" onclick="window.print()">Print / Save PDF ↗</button></div>
+        <div class="metric-grid">
+          <article class="metric-card"><span>BMR</span><strong><%= result.bmr.toLocaleString('en-IN') %></strong><small>kcal/day • resting burn</small></article>
+          <article class="metric-card"><span>TDEE</span><strong><%= result.tdee.toLocaleString('en-IN') %></strong><small>kcal/day • maintenance estimate</small></article>
+          <article class="metric-card highlight"><span>DAILY CALORIE TARGET</span><strong><%= result.calories.toLocaleString('en-IN') %></strong><small><%= result.goalLabel %></small></article>
+          <article class="metric-card"><span>BMI</span><strong><%= result.bmi %></strong><small><%= result.bmiStatus %></small></article>
+        </div>
+        <div class="macro-panel">
+          <div><span class="eyebrow">DAILY MACRO TARGETS</span><h3>What to aim for</h3></div>
+          <div class="macro-cards">
+            <div><span class="macro-dot protein"></span><b><%= result.protein %> g</b><small>Protein</small></div>
+            <div><span class="macro-dot carbs"></span><b><%= result.carbs %> g</b><small>Carbohydrates</small></div>
+            <div><span class="macro-dot fats"></span><b><%= result.fat %> g</b><small>Fat</small></div>
+          </div>
+        </div>
+
+        <div class="result-section">
+          <div class="result-title"><div><span class="eyebrow">YOUR DAILY ROUTINE</span><h3><%= result.plan.dietLabel %> meal plan</h3></div><span class="pill"><%= result.calories %> kcal target</span></div>
+          <div class="meal-list">
+            <% result.plan.meals.forEach((meal, i) => { %>
+              <article class="meal-row">
+                <div class="meal-index"><%= String(i + 1).padStart(2, '0') %></div>
+                <div class="meal-main"><span><%= meal.time %></span><h4><%= meal.title %></h4><p><%= meal.foods.join(' • ') %></p></div>
+                <div class="meal-nutrition"><b><%= meal.kcal %> kcal</b><small>P <%= meal.protein %>g • C <%= meal.carbs %>g</small></div>
+              </article>
+            <% }) %>
+          </div>
+          <p class="disclaimer-small">Meal nutrition is approximate. Portions may need adjustment to match your exact target and appetite.</p>
+        </div>
+
+        <div class="result-section grocery-section">
+          <div class="result-title"><div><span class="eyebrow">SHOP SMART</span><h3>30-day grocery list</h3></div><span class="pill">Approx. monthly estimate</span></div>
+          <div class="cost-banner"><div><small>Estimated monthly food cost</small><strong>₹<%= result.plan.estimatedCost.toLocaleString('en-IN') %></strong><span><%= result.plan.budgetNote %></span></div><div class="budget-mark">₹<%= result.plan.budget.toLocaleString('en-IN') %><small>Your budget</small></div></div>
+          <div class="grocery-table-wrap"><table class="grocery-table"><thead><tr><th>Grocery item</th><th>Monthly quantity</th><th>Approx. cost</th></tr></thead><tbody>
+            <% result.plan.monthly.forEach(item => { %><tr><td><%= item[0] %></td><td><%= item[1] %></td><td>₹<%= item[2].toLocaleString('en-IN') %></td></tr><% }) %>
+          </tbody></table></div>
+          <p class="disclaimer-small">Prices are illustrative estimates and vary by city, season, shop and brand. Shared household staples can reduce your personal cost.</p>
+        </div>
+        <div class="health-note"><b>Health note:</b> This is a general estimate, not a medical prescription. BMI and calorie formulas are screening/planning tools. If you are underweight, have unexplained weight loss, illness, pregnancy, or a history of disordered eating, consult a qualified doctor or dietitian before following a calorie target.</div>
+        <div class="results-actions"><a href="#planner" class="secondary-btn">← Edit details</a><button class="primary-btn" onclick="window.print()">Save / Print report ↗</button></div>
+      </section>
+      <% } %>
+    </section>
+
+    <section class="bottom-cta" id="about"><div><span class="eyebrow">BETTER HABITS START HERE</span><h2>Progress is personal.<br><em>Your plan should be too.</em></h2></div><a class="primary-btn" href="#planner">Create my plan →</a></section>
+  </main>
+
+<footer class="site-footer" id="footer">
+    <div class="footer-brand">
+      <a class="brand" href="/" aria-label="FitGain home"><img class="brand-logo" src="/images/fitgain-mark.png" alt=""><span>fitgain<span class="brand-accent"> dietplan</span></span></a>
+      <p>Know your numbers. Fuel your goals. Build healthier habits with a practical nutrition plan.</p>
+      <span class="footer-copy">© <%= new Date().getFullYear() %> FitGain. All rights reserved.</span>
+    </div>
+    <div class="footer-column">
+      <h4>About FitGain</h4>
+      <p>FitGain is a simple diet and fitness planning tool. Calculate BMI, BMR, TDEE, daily calorie needs and macro targets, then explore vegetarian or non-vegetarian meal ideas with an estimated monthly grocery list.</p>
+      <p class="tech-line">Nutrition figures and grocery prices are estimates, not medical advice.</p>
+    </div>
+    <div class="footer-column developer-column">
+      <h4>About the Developer</h4>
+      <p><strong>Sintu Kumar</strong><br>BCA Graduate · Full-Stack Web Developer</p>
+      <p>Builds responsive web applications and practical digital solutions using HTML, CSS, JavaScript, Node.js, Express, EJS, MongoDB and SQL.</p>
+      <div class="developer-links">
+        <a href="https://SintuPrajapati.vercel.app/" target="_blank" rel="noopener noreferrer">View Portfolio ↗</a>
+        <a href="https://github.com/Sintukrbca" target="_blank" rel="noopener noreferrer">GitHub Profile ↗</a>
+      </div>
+    </div>
+    <div class="footer-column footer-links">
+      <h4>Quick Links</h4>
+      <a href="#planner">Diet Planner</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#about">Our approach</a>
+    </div>
+  </footer>
+  <script src="/js/app.js"></script>
+</body>
+</html>
